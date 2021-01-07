@@ -67,6 +67,15 @@ class ESC {
 
     
   public:
+    // RT Data vars
+    double tempMosfet;
+    double tempMotor;
+    double dutyCycle;
+    double erpm;
+    double voltage;
+    uint8_t fault;
+    
+    // Balance vars
     double pidOutput;
     double pitch;
     double roll;
@@ -93,6 +102,7 @@ class ESC {
     }
 
     void loop(){
+      getRealtimeData();
       getBalance();
     }
     void ping(){
@@ -198,6 +208,48 @@ class ESC {
     }
     Serial.println();
     
+  }
+
+  void getRealtimeData(){
+    
+    //80000803 3 2 0 0 
+    struct can_frame canMsg1;
+    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + vesc_id;
+    canMsg1.can_dlc = 0x07;
+    canMsg1.data[0] = local_id;
+    canMsg1.data[1] = 0x00;
+    canMsg1.data[2] = 0x32;
+    // mask
+    canMsg1.data[3] = 0x00;
+    canMsg1.data[4] = 0x00;
+    canMsg1.data[5] = B10000001;
+    canMsg1.data[6] = B11000011;
+    mcp2515.sendMessage(&canMsg1);
+  
+    batchRead();
+    parseRealtimeData();
+  }
+
+  bool parseRealtimeData(){
+    if(readBufferLength != 0x12 || readBuffer[0] != 0x32){
+      return;
+    }
+    tempMosfet = (((int16_t)readBuffer[5] << 8) + ((int16_t)readBuffer[6])) / 10.0;
+    tempMotor = (((int16_t)readBuffer[7] << 8) + ((int16_t)readBuffer[8])) / 10.0;
+    dutyCycle = (((int16_t)readBuffer[9] << 8) + ((int16_t)readBuffer[10])) / 1000.0;
+    erpm = (((int32_t)readBuffer[11] << 24) + ((int32_t)readBuffer[12] << 16) + ((int32_t)readBuffer[13] << 8) + ((int32_t)readBuffer[14]));
+    voltage = (((int16_t)readBuffer[15] << 8) + ((int16_t)readBuffer[16])) / 10.0;
+    fault = readBuffer[17];
+
+    Serial.print("Mosfet Temp: ");
+    Serial.print(tempMosfet);
+    Serial.println();
+    Serial.print("voltage: ");
+    Serial.print(voltage);
+    Serial.println();
+    Serial.print("faultoll: ");
+    Serial.print(fault);
+    Serial.println();
   }
   
   void getBalance(){

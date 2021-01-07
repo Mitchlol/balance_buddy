@@ -1,21 +1,19 @@
-#include "esc.cpp"
+#include "display.cpp"
 
 ESC esc;
+Display mDisplay(esc);
 
 
 void setup() {
   
-  
   Serial.begin(115200);
-  Serial.println("------- CAN Read ----------");
-  Serial.println("ID  DLC   DATA");
 
   esc.setup();
-  displaySetup();
+  mDisplay.setup();
 }
 
 void loop() {
   esc.loop();
-  displayLoop(&esc);
-  delay(100);
+  mDisplay.loop();
+  delay(1000);
 }
