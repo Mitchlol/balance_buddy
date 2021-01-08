@@ -241,15 +241,15 @@ class ESC {
     voltage = (((int16_t)readBuffer[15] << 8) + ((int16_t)readBuffer[16])) / 10.0;
     fault = readBuffer[17];
 
-    Serial.print("Mosfet Temp: ");
-    Serial.print(tempMosfet);
-    Serial.println();
-    Serial.print("voltage: ");
-    Serial.print(voltage);
-    Serial.println();
-    Serial.print("faultoll: ");
-    Serial.print(fault);
-    Serial.println();
+//    Serial.print("Mosfet Temp: ");
+//    Serial.print(tempMosfet);
+//    Serial.println();
+//    Serial.print("voltage: ");
+//    Serial.print(voltage);
+//    Serial.println();
+//    Serial.print("faultoll: ");
+//    Serial.print(fault);
+//    Serial.println();
   }
   
   void getBalance(){
@@ -285,15 +285,15 @@ class ESC {
     adc1;
     adc2;
 
-    Serial.print("PID Output: ");
-    Serial.print(pidOutput);
-    Serial.println();
-    Serial.print("Pitch: ");
-    Serial.print(pitch);
-    Serial.println();
-    Serial.print("Roll: ");
-    Serial.print(roll);
-    Serial.println();
+//    Serial.print("PID Output: ");
+//    Serial.print(pidOutput);
+//    Serial.println();
+//    Serial.print("Pitch: ");
+//    Serial.print(pitch);
+//    Serial.println();
+//    Serial.print("Roll: ");
+//    Serial.print(roll);
+//    Serial.println();
   }
   
   void printFrame(struct can_frame *frame){
@@ -346,17 +346,17 @@ class ESC {
       }
     }
 
-    for(int i = 0; i < readBufferLength; i++){
-      Serial.print(readBuffer[i],HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-
-    for(int i = 0; i < readBufferInfoLength; i++){
-      Serial.print(readBufferInfo[i],HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
+//    for(int i = 0; i < readBufferLength; i++){
+//      Serial.print(readBuffer[i],HEX);
+//      Serial.print(" ");
+//    }
+//    Serial.println();
+//
+//    for(int i = 0; i < readBufferInfoLength; i++){
+//      Serial.print(readBufferInfo[i],HEX);
+//      Serial.print(" ");
+//    }
+//    Serial.println();
 
     // TODO: Proper read validation with checksum, for now we just compare lengths, can improove if data is error prone.
     uint16_t supposedLength = ((uint16_t)readBufferInfo[2] << 8) + readBufferInfo[3];
@@ -364,24 +364,6 @@ class ESC {
       readBufferLength = 0;
       readBufferInfoLength = 0;
     }
-    
-  
-//    int32_t pitchAngle = ((int32_t)responses[0].data[6] << 24) + ((int32_t)responses[0].data[7] << 16) + ((int32_t)responses[1].data[1] << 8) + ((int32_t)responses[1].data[2]);
-//    pitchAngle = pitchAngle/1000000.0;
-//    Serial.print("Pitch Angle: ");
-//    Serial.print(pitchAngle);
-//    Serial.print(" ");
-//    Serial.print(pitchAngle/1000000.0);
-//    Serial.print(" ");
-//    Serial.print((int32_t)responses[0].data[6] << 24, HEX);
-//    Serial.print(" ");
-//    Serial.print((int32_t)responses[0].data[7] << 16, HEX);
-//    Serial.print(" ");
-//    Serial.print((int32_t)responses[1].data[1] << 8, HEX);
-//    Serial.print(" ");
-//    Serial.print(responses[1].data[2], HEX);
-//    Serial.print(" ");
-//    Serial.println();
   }
 
 };
