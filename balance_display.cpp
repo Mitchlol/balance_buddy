@@ -3,12 +3,12 @@
 #include <SSD1306AsciiWire.h>
 #include "esc.cpp"
 
-class Display {
+class BalanceDisplay {
   private:
     SSD1306AsciiWire oled;
     ESC &esc;
   public:
-    Display(ESC &esc): esc(esc){};
+    BalanceDisplay(ESC &esc): esc(esc){};
     void setup(){
       Wire.begin();
       Wire.setClock(400000L);

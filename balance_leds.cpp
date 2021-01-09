@@ -1,3 +1,4 @@
+#define FASTLED_INTERNAL
 #include "FastLED.h"
 
 #define LED_TYPE WS2811
@@ -14,6 +15,8 @@
 
 class BalanceLEDs {
   private:
+    bool directionIsForward;
+  
     CRGB forward[NUM_LEDS_FORWARD];
     CRGB backward[NUM_LEDS_BACKWARD];
 
@@ -55,17 +58,29 @@ class BalanceLEDs {
       FastLED.addLeds<LED_TYPE, LED_PIN_FOREWARD, COLOR_ORDER>(forward, NUM_LEDS_FORWARD).setCorrection( TypicalLEDStrip );
       FastLED.addLeds<LED_TYPE, LED_PIN_BACKWARD, COLOR_ORDER>(backward, NUM_LEDS_BACKWARD).setCorrection( TypicalLEDStrip );
       FastLED.setBrightness(BRIGHTNESS);
+
+      // Default to forward
+      directionIsForward = true;
+      fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::White, 75);
+      fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::Red, 75); 
+      FastLED.show();
     }
 
     void loop(double erpm){
-      // Err on the side of forwards, and avoid flashing at 0
-      if(erpm > -2){
+      // Latching behavior, if you know, you know.
+      if(erpm > 10){
+        directionIsForward = true;
+      }else if(erpm < -10){
+        directionIsForward = false;
+      }
+
+      if(directionIsForward){
         fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::White, 75);
         fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::Red, 75);
       }else{
         fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::Red, 75);
         fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::White, 75);
       }
-      FastLED.show();  
+        FastLED.show();
     }
 };

@@ -1,11 +1,11 @@
-#include "display.cpp"
-#include "beeper.cpp"
-#include "led.cpp"
+#include "balance_display.cpp"
+#include "balance_beeper.cpp"
+#include "balance_leds.cpp"
 
 ESC esc;
-Display mDisplay(esc);
-Beeper beeper;
-BalanceLEDs led;
+BalanceDisplay balanceDisplay(esc);
+BalanceBeeper balanceBeeper;
+BalanceLEDs balanceLEDs;
 
 
 void setup() {
@@ -13,23 +13,15 @@ void setup() {
   Serial.begin(115200);
 
   esc.setup();
-  mDisplay.setup();
-  beeper.setup();
-  led.setup();
+  balanceDisplay.setup();
+  balanceBeeper.setup();
+  balanceLEDs.setup();
 }
 
 void loop() {
   esc.loop();
-  mDisplay.loop();
-  beeper.loop();
-  led.loop(esc.erpm);
-
-  if(esc.pitch > 10){
-    beeper.queueThreeShort();    
-  }
-
-  if(esc.roll > 10){
-    beeper.queueLong();    
-  }
+  balanceDisplay.loop();
+  balanceBeeper.loop(esc.dutyCycle, esc.erpm, esc.switchState, esc.voltage);
+  balanceLEDs.loop(esc.erpm);
 
 }
