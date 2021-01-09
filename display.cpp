@@ -31,5 +31,8 @@ class Display {
 
       oled.print(esc.voltage);
       oled.println("V    ");
+
+      oled.print(esc.erpm);
+      oled.println(" <-ADC1    ");
     }
 };

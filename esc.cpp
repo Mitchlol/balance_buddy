@@ -128,88 +128,6 @@ class ESC {
     mcp2515.sendMessage(&canMsg1);
   }
   
-  void getFirmware(){
-    //80000803 3 2 0 0 
-    struct can_frame canMsg1;
-    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + vesc_id;
-    canMsg1.can_dlc = 0x03;
-    canMsg1.data[0] = local_id;
-    canMsg1.data[1] = 0x00;
-    canMsg1.data[2] = 0x00;
-    mcp2515.sendMessage(&canMsg1);
-  }
-  
-  void sendFirmware(){
-    //02:41:23.906 -> 80000503 8 0 0 5 1 43 68 65 61 
-    //02:41:23.906 -> 80000503 8 7 70 20 46 4F 43 65 72 
-    //02:41:23.906 -> 80000503 8 E 20 32 0 21 0 48 0 
-    struct can_frame canMsg1;
-    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_FILL_RX_BUFFER) << 8) + vesc_id;
-    canMsg1.can_dlc = 0x08;
-    canMsg1.data[0] = 0x00;
-    canMsg1.data[1] = 0x00;
-    canMsg1.data[2] = 0x05;
-    canMsg1.data[3] = 0x01;
-    canMsg1.data[4] = 0x43;
-    canMsg1.data[5] = 0x68;
-    canMsg1.data[6] = 0x65;
-    canMsg1.data[7] = 0x61;
-    mcp2515.sendMessage(&canMsg1);
-  
-    Serial.print(canMsg1.can_id, HEX); // print ID
-    Serial.print(" "); 
-    Serial.print(canMsg1.can_dlc, HEX); // print DLC
-    Serial.print(" ");
-    for (int i = 0; i<canMsg1.can_dlc; i++)  {  // print the data
-      Serial.print(canMsg1.data[i],HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    
-  
-    canMsg1.data[0] = 0x07;
-    canMsg1.data[1] = 0x70;
-    canMsg1.data[2] = 0x20;
-    canMsg1.data[3] = 0x46;
-    canMsg1.data[4] = 0x4F;
-    canMsg1.data[5] = 0x43;
-    canMsg1.data[6] = 0x65;
-    canMsg1.data[7] = 0x72;
-    mcp2515.sendMessage(&canMsg1);
-  
-    Serial.print(canMsg1.can_id, HEX); // print ID
-    Serial.print(" "); 
-    Serial.print(canMsg1.can_dlc, HEX); // print DLC
-    Serial.print(" ");
-    for (int i = 0; i<canMsg1.can_dlc; i++)  {  // print the data
-      Serial.print(canMsg1.data[i],HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    
-  
-    canMsg1.data[0] = 0x0E;
-    canMsg1.data[1] = 0x20;
-    canMsg1.data[2] = 0x32;
-    canMsg1.data[3] = 0x00;
-    canMsg1.data[4] = 0x21;
-    canMsg1.data[5] = 0x00;
-    canMsg1.data[6] = 0x48;
-    canMsg1.data[7] = 0x00;
-    mcp2515.sendMessage(&canMsg1);
-  
-    Serial.print(canMsg1.can_id, HEX); // print ID
-    Serial.print(" "); 
-    Serial.print(canMsg1.can_dlc, HEX); // print DLC
-    Serial.print(" ");
-    for (int i = 0; i<canMsg1.can_dlc; i++)  {  // print the data
-      Serial.print(canMsg1.data[i],HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    
-  }
-
   void getRealtimeData(){
     
     //80000803 3 2 0 0 
@@ -261,7 +179,6 @@ class ESC {
     canMsg1.data[0] = local_id;
     canMsg1.data[1] = 0x00;
     canMsg1.data[2] = 0x4F;
-  //  canMsg1.data[2] = 0x00;
     mcp2515.sendMessage(&canMsg1);
   
     batchRead();
@@ -277,14 +194,13 @@ class ESC {
     pidOutput = (((int32_t)readBuffer[1] << 24) + ((int32_t)readBuffer[2] << 16) + ((int32_t)readBuffer[3] << 8) + ((int32_t)readBuffer[4])) / 1000000.0;
     pitch = (((int32_t)readBuffer[5] << 24) + ((int32_t)readBuffer[6] << 16) + ((int32_t)readBuffer[7] << 8) + ((int32_t)readBuffer[8])) / 1000000.0;
     roll = (((int32_t)readBuffer[9] << 24) + ((int32_t)readBuffer[10] << 16) + ((int32_t)readBuffer[11] << 8) + ((int32_t)readBuffer[12])) / 1000000.0;
-    loopTime;
-    motorCurrent;
-    motorPosition;
-    balanceState;
-    switchState;
-    adc1;
-    adc2;
-
+    loopTime = ((uint32_t)readBuffer[13] << 24) + ((uint32_t)readBuffer[14] << 16) + ((uint32_t)readBuffer[15] << 8) + ((uint32_t)readBuffer[16]);
+    motorCurrent = (((int32_t)readBuffer[17] << 24) + ((int32_t)readBuffer[18] << 16) + ((int32_t)readBuffer[19] << 8) + ((int32_t)readBuffer[20])) / 1000000.0;
+    motorPosition = (((int32_t)readBuffer[21] << 24) + ((int32_t)readBuffer[22] << 16) + ((int32_t)readBuffer[23] << 8) + ((int32_t)readBuffer[24])) / 1000000.0;
+    balanceState = ((uint16_t)readBuffer[25] << 8) + ((uint16_t)readBuffer[26]);
+    switchState = ((uint16_t)readBuffer[27] << 8) + ((uint16_t)readBuffer[28]);
+    adc1 = (((int32_t)readBuffer[29] << 24) + ((int32_t)readBuffer[30] << 16) + ((int32_t)readBuffer[31] << 8) + ((int32_t)readBuffer[32])) / 1000000.0;
+    adc2 = (((int32_t)readBuffer[33] << 24) + ((int32_t)readBuffer[34] << 16) + ((int32_t)readBuffer[35] << 8) + ((int32_t)readBuffer[36])) / 1000000.0;
 //    Serial.print("PID Output: ");
 //    Serial.print(pidOutput);
 //    Serial.println();
@@ -320,7 +236,6 @@ class ESC {
 //    for(int i = 0; i < respnsesLength; i++){
 //      printFrame(&responses[i]);
 //    }
-  
     
     // Clear buffer
     readBufferLength = 0;

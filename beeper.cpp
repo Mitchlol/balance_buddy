@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <arduino.h>
 
+#define BEEPER_PIN 4
+
 class Beeper {
   private:
     struct Beep{
@@ -24,9 +26,9 @@ class Beeper {
           if(timeInBeeping > beeps[i].startOffset && beeps[i].triggered == false){
             beeps[i].triggered = true;
             if(beeps[i].frequency > 0){
-              tone(4, beeps[i].frequency);
+              tone(BEEPER_PIN, beeps[i].frequency);
             }else{
-              noTone(4);
+              noTone(BEEPER_PIN);
             }
             if(i == beepsLength -1){
               isBeeping = false;

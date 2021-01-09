@@ -1,9 +1,11 @@
 #include "display.cpp"
 #include "beeper.cpp"
+#include "led.cpp"
 
 ESC esc;
 Display mDisplay(esc);
 Beeper beeper;
+BalanceLEDs led;
 
 
 void setup() {
@@ -13,13 +15,14 @@ void setup() {
   esc.setup();
   mDisplay.setup();
   beeper.setup();
+  led.setup();
 }
 
 void loop() {
   esc.loop();
   mDisplay.loop();
   beeper.loop();
-//  delay(1000);
+  led.loop(esc.erpm);
 
   if(esc.pitch > 10){
     beeper.queueThreeShort();    
