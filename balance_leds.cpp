@@ -1,5 +1,5 @@
 #define FASTLED_INTERNAL
-#include "FastLED.h"
+#include "./src/FastLED/src/FastLED.h"
 
 #define LED_TYPE WS2811
 #define COLOR_ORDER GRB

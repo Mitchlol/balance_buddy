@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include "./mcp2515.h"
+#include "./src/mcp2515/mcp2515.h"
 
 typedef enum {
   CAN_PACKET_SET_DUTY = 0,
