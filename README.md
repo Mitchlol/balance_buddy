@@ -19,9 +19,10 @@ Arduino based accessory board for the balance app in BV's BLDC firmware.
 For more info see https://github.com/autowp/arduino-mcp2515
 ![](./wiki/images/can_bus_wiring.png)
 ### 2. Piezo:
-if you use a fancy buzzer/speaker make sure it wont blow the nano
+**if you use a fancy buzzer/speaker make sure it wont blow the nano**
 ![](./wiki/images/piezo_wiring.png)
 ### 3. LEDs:
+**if you wire lots of LEDs make sure it wont blow the nano**
 ![](./wiki/images/led_wiring.png)
 ### 4. SSD1306:
 ![](./wiki/images/display_wiring.png)
