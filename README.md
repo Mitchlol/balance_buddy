@@ -14,16 +14,25 @@ Arduino based accessory board for the balance app in BV's BLDC firmware.
 1. 2x LED Strips (WS2811 GRB is the default, but anything supported by FastLED should work)
 1. SSD1306 128x64 Display
 
-## Wiring
-1. Can Module: see https://github.com/autowp/arduino-mcp2515
-1. Piezo: D4 (if you use a fancy buzzer/speaker make sure it wont blow the nano)
-1. LEDs: D5 & D6
-1. SSD1306: Wire to i2c
+# Wiring
+## Can Module: 
+For more info see https://github.com/autowp/arduino-mcp2515
+![](./wiki/images/can_bus_wiring.png)
+### 2. Piezo:
+if you use a fancy buzzer/speaker make sure it wont blow the nano
+![](./wiki/images/piezo_wiring.png)
+### 3. LEDs:
+![](./wiki/images/led_wiring.png)
+### 4. SSD1306:
+![](./wiki/images/display_wiring.png)
 
-## Configuration
-Features are designed to be configured VIA the conatants in the 3 feature files balance_beeper.cpp/balance_leds.cpp/balance_display.cpp
+# Configuration
+## Options and pins
+Features are designed to be configured VIA the constants
+1. esc.cpp: Configure CAN bus IDs, you must match the ID set in the VESC Tool
+1. balance_beeper.cpp: Configure wiring and alerts
+1. balance_leds.cpp: Configure wiritng, LED Type, Brightnes, etc.
+1. balance_display.cpp: Nothing configureable yet
 
 ## Building
-Youll need to install these libraies:
-https://github.com/FastLED/FastLED
-https://github.com/greiman/SSD1306Ascii
+All the required libraries are included, just hit build in Arduino IDE

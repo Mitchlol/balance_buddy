@@ -1,6 +1,9 @@
 #include <SPI.h>
 #include "./src/mcp2515/mcp2515.h"
 
+#define ESC_CAN_ID 2
+#define BALANCE_BUDDY_CAN_ID 3
+
 typedef enum {
   CAN_PACKET_SET_DUTY = 0,
   CAN_PACKET_SET_CURRENT,
@@ -54,9 +57,6 @@ class ESC {
   private:
     MCP2515 mcp2515;
   
-    int local_id = 0x03;
-    int vesc_id = 0x02;
-
     struct can_frame responses[10];
     int respnsesLength = 0;
 
@@ -114,17 +114,17 @@ class ESC {
       // 1 length
       // 1 id
       struct can_frame canMsg1;
-      canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PING) << 8) + vesc_id;
+      canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PING) << 8) + ESC_CAN_ID;
       canMsg1.can_dlc = 0x01;
-      canMsg1.data[0] = local_id;
+      canMsg1.data[0] = BALANCE_BUDDY_CAN_ID;
       mcp2515.sendMessage(&canMsg1);
     }
   
   void pong(){
     struct can_frame canMsg1;
-    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PONG) << 8) + vesc_id;
+    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PONG) << 8) + ESC_CAN_ID;
     canMsg1.can_dlc = 0x01;
-    canMsg1.data[0] = local_id;
+    canMsg1.data[0] = BALANCE_BUDDY_CAN_ID;
     mcp2515.sendMessage(&canMsg1);
   }
   
@@ -132,9 +132,9 @@ class ESC {
     
     //80000803 3 2 0 0 
     struct can_frame canMsg1;
-    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + vesc_id;
+    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + ESC_CAN_ID;
     canMsg1.can_dlc = 0x07;
-    canMsg1.data[0] = local_id;
+    canMsg1.data[0] = BALANCE_BUDDY_CAN_ID;
     canMsg1.data[1] = 0x00;
     canMsg1.data[2] = 0x32;
     // mask
@@ -174,9 +174,9 @@ class ESC {
     
     //80000803 3 2 0 0 
     struct can_frame canMsg1;
-    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + vesc_id;
+    canMsg1.can_id  = (uint32_t (0x8000) << 16) + (uint16_t (CAN_PACKET_PROCESS_SHORT_BUFFER) << 8) + ESC_CAN_ID;
     canMsg1.can_dlc = 0x03;
-    canMsg1.data[0] = local_id;
+    canMsg1.data[0] = BALANCE_BUDDY_CAN_ID;
     canMsg1.data[1] = 0x00;
     canMsg1.data[2] = 0x4F;
     mcp2515.sendMessage(&canMsg1);
@@ -248,12 +248,12 @@ class ESC {
     }
     // Convert can frames to full buffer
     for(int i = 0; i < respnsesLength; i++){
-      if(responses[i].can_id == 0x80000000 + ((uint16_t)CAN_PACKET_FILL_RX_BUFFER << 8) + local_id){
+      if(responses[i].can_id == 0x80000000 + ((uint16_t)CAN_PACKET_FILL_RX_BUFFER << 8) + BALANCE_BUDDY_CAN_ID){
         for(int j = 1; j < responses[i].can_dlc; j++){
           readBuffer[responses[i].data[0]+j-1] = responses[i].data[j];
           readBufferLength++;
         }
-      }else if(responses[i].can_id == 0x80000000 + ((uint16_t)CAN_PACKET_PROCESS_RX_BUFFER << 8) + local_id){
+      }else if(responses[i].can_id == 0x80000000 + ((uint16_t)CAN_PACKET_PROCESS_RX_BUFFER << 8) + BALANCE_BUDDY_CAN_ID){
         for(int j = 0; j < responses[i].can_dlc; j++){
           readBufferInfo[j] = responses[i].data[j];
           readBufferInfoLength++;

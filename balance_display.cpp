@@ -34,11 +34,11 @@ class BalanceDisplay {
       oled.print(adc1);
       oled.set2X();
       if(switchState == 0){
-        oled.print(" OFF");
+        oled.print(" OFF ");
       }else if(switchState == 1){
         oled.print(" HALF");
       }else{
-        oled.print(" ON");
+        oled.print(" ON  ");
       }
       oled.set1X();
       oled.println();
