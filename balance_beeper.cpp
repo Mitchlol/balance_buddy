@@ -29,12 +29,12 @@ class BalanceBeeper {
       beeper.loop();
 
       // Non latching beeps for Duty Cycle
-      if(dutyCycle > DUTY_CYCLE_ALERT && DUTY_CYCLE_ALERT > 0){
+      if(fabsf(dutyCycle) > DUTY_CYCLE_ALERT && DUTY_CYCLE_ALERT > 0){
         beeper.queueShortSingle();
       }
 
       // Latching beep for HALF footpad state
-      if(switchState == 1 && erpm > SWITCH_ERPM && SWITCH_ERPM > 0 && switchStateLatch == false){
+      if(switchState == 1 && fabsf(erpm) > SWITCH_ERPM && SWITCH_ERPM > 0 && switchStateLatch == false){
         switchStateLatch = true;
         beeper.queueLongSingle();
       }else if(switchState != 1){

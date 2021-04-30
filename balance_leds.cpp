@@ -1,16 +1,17 @@
 #define FASTLED_INTERNAL
 #include "./src/FastLED/src/FastLED.h"
 
-#define LED_TYPE WS2811
+#define LED_TYPE WS2812
 #define COLOR_ORDER GRB
 #define BRIGHTNESS 64
 
+// Note: Forward in this instance means postive ERPM, which can actually be backwards if your motor direction is reversed.
 #define LED_PIN_FOREWARD 5
 #define LED_PIN_BACKWARD 6
 #define NUM_LEDS_FORWARD 1
 #define NUM_LEDS_BACKWARD 1
-#define BRIGHTNESS_FORWARD 64
-#define BRIGHTNESS_BACKWARD 64
+#define STARTUP_FORWARD true
+
 
 // For full color list see http://fastled.io/docs/3.1/struct_c_r_g_b.html
 #define COLOR_FORWARD CRGB::White
@@ -63,10 +64,16 @@ class BalanceLEDs {
       FastLED.addLeds<LED_TYPE, LED_PIN_BACKWARD, COLOR_ORDER>(backward, NUM_LEDS_BACKWARD).setCorrection( TypicalLEDStrip );
       FastLED.setBrightness(BRIGHTNESS);
 
-      // Default to forward
-      directionIsForward = true;
-      fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_FORWARD, 75);
-      fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_BACKWARD, 75); 
+      if(STARTUP_FORWARD){
+        // Default to forward
+        directionIsForward = true;
+        fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_FORWARD, 75);
+        fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_BACKWARD, 75); 
+      }else{
+        directionIsForward = false;
+        fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_BACKWARD, 75);
+        fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_FORWARD, 75);
+      }
       FastLED.show();
     }
 

@@ -72,7 +72,9 @@ class BalanceDisplay {
       }else if(balanceState == 11){
         oled.println("Initial                 ");
       }else{
-        oled.println("Unknown");
+        oled.print("Unknown: ");
+        oled.print(balanceState);
+        oled.println("                ");
       }
 
       // Line 4: Duty Cycle (up to 64 verical bars)
@@ -80,6 +82,7 @@ class BalanceDisplay {
       for(float i = 0; i < fabsf(dutyCycle); i += 0.015){
         oled.print("|");
       }
+      oled.print("                           ");
       oled.println();
     }
 };
