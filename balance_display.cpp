@@ -1,6 +1,6 @@
 #include <Wire.h>
-#include "src\SSD1306Ascii\src\SSD1306Ascii.h"
-#include "src\SSD1306Ascii\src\SSD1306AsciiWire.h"
+#include "./src/SSD1306Ascii/src/SSD1306Ascii.h"
+#include "./src/SSD1306Ascii/src/SSD1306AsciiWire.h"
 #include "esc.cpp"
 
 class BalanceDisplay {
