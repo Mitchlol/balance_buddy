@@ -12,6 +12,10 @@
 #define BRIGHTNESS_FORWARD 64
 #define BRIGHTNESS_BACKWARD 64
 
+// For full color list see http://fastled.io/docs/3.1/struct_c_r_g_b.html
+#define COLOR_FORWARD CRGB::White
+#define COLOR_BACKWARD CRGB::Red
+
 
 class BalanceLEDs {
   private:
@@ -61,8 +65,8 @@ class BalanceLEDs {
 
       // Default to forward
       directionIsForward = true;
-      fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::White, 75);
-      fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::Red, 75); 
+      fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_FORWARD, 75);
+      fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_BACKWARD, 75); 
       FastLED.show();
     }
 
@@ -75,11 +79,11 @@ class BalanceLEDs {
       }
 
       if(directionIsForward){
-        fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::White, 75);
-        fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::Red, 75);
+        fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_FORWARD, 75);
+        fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_BACKWARD, 75);
       }else{
-        fadeTowardColor(forward, NUM_LEDS_FORWARD, CRGB::Red, 75);
-        fadeTowardColor(backward, NUM_LEDS_BACKWARD, CRGB::White, 75);
+        fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_BACKWARD, 75);
+        fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_FORWARD, 75);
       }
         FastLED.show();
     }
