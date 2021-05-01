@@ -16,8 +16,9 @@ Arduino based accessory board for the balance app in BV's BLDC firmware.
 
 # Wiring
 ## Can Module: 
-For more info see https://github.com/autowp/arduino-mcp2515
+Be sure you short the can termination pins on the module if needed (if your can setup is just an esc and this, you need it)  
 ![](./wiki/images/can_bus_wiring.png)
+For more info see https://github.com/autowp/arduino-mcp2515
 ### 2. Piezo:
 **if you use a fancy buzzer/speaker make sure it wont blow the nano**
 ![](./wiki/images/piezo_wiring.png)
