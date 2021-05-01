@@ -22,6 +22,6 @@ void loop() {
   esc.loop();
   balanceDisplay.loop(esc.tempMosfet, esc.dutyCycle, esc.voltage, esc.balanceState, esc.switchState, esc.adc1, esc.adc2);
   balanceBeeper.loop(esc.dutyCycle, esc.erpm, esc.switchState, esc.voltage);
-  balanceLEDs.loop(esc.erpm);
+  balanceLEDs.loop(esc.erpm, esc.switchState);
   // No delay? #YOLO
 }

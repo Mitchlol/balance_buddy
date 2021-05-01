@@ -12,6 +12,9 @@
 #define NUM_LEDS_BACKWARD 1
 #define STARTUP_FORWARD true
 
+// Dims leds when switches are off, 1.0 is full brightness, 0.0 is off when switch is off
+#define SWITCH_OFF_BRIGHTNESS_SCALE 1.0
+
 
 // For full color list see http://fastled.io/docs/3.1/struct_c_r_g_b.html
 #define COLOR_FORWARD CRGB::White
@@ -21,6 +24,7 @@
 class BalanceLEDs {
   private:
     bool directionIsForward;
+    int targetBrightness;
   
     CRGB forward[NUM_LEDS_FORWARD];
     CRGB backward[NUM_LEDS_BACKWARD];
@@ -62,7 +66,7 @@ class BalanceLEDs {
     void setup(){
       FastLED.addLeds<LED_TYPE, LED_PIN_FOREWARD, COLOR_ORDER>(forward, NUM_LEDS_FORWARD).setCorrection( TypicalLEDStrip );
       FastLED.addLeds<LED_TYPE, LED_PIN_BACKWARD, COLOR_ORDER>(backward, NUM_LEDS_BACKWARD).setCorrection( TypicalLEDStrip );
-      FastLED.setBrightness(BRIGHTNESS);
+      FastLED.setBrightness(0.0);
 
       if(STARTUP_FORWARD){
         // Default to forward
@@ -77,7 +81,7 @@ class BalanceLEDs {
       FastLED.show();
     }
 
-    void loop(double erpm){
+    void loop(double erpm, uint16_t switchState){
       // Latching behavior, if you know, you know.
       if(erpm > 10){
         directionIsForward = true;
@@ -92,6 +96,20 @@ class BalanceLEDs {
         fadeTowardColor(forward, NUM_LEDS_FORWARD, COLOR_BACKWARD, 75);
         fadeTowardColor(backward, NUM_LEDS_BACKWARD, COLOR_FORWARD, 75);
       }
-        FastLED.show();
+
+      if(switchState == 0){
+        targetBrightness = BRIGHTNESS * SWITCH_OFF_BRIGHTNESS_SCALE;
+      }else{
+        targetBrightness = BRIGHTNESS;
+      }
+
+      // Fade Brightness
+      if(FastLED.getBrightness() > targetBrightness){
+        FastLED.setBrightness(max(FastLED.getBrightness() - 10, targetBrightness ));
+      }else if(FastLED.getBrightness() < targetBrightness){
+        FastLED.setBrightness(min(FastLED.getBrightness() + 35, targetBrightness));
+      }
+      
+      FastLED.show();
     }
 };
