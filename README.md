@@ -2,7 +2,7 @@
 Arduino based accessory board for the balance app in BV's BLDC firmware.
 
 ## Features
-1. Directional LEDs for headlight/taillight.
+1. Directional LEDs for headlight/taillight with dimming.
 1. Buzzer for over speed, low voltage, and high speed half switch warnings.
 1. A teeny tiny small display thats so small you cant even see it with data you probbaly wont be able to read (it's smol).
 1. It uses CAN bus, so there are NO DOWNSIDES to adding it. JUST DO IT!
@@ -10,9 +10,9 @@ Arduino based accessory board for the balance app in BV's BLDC firmware.
 ## Parts List
 1. Adruino Nano
 1. MCP2515 Can Bus Module Board
-1. 5v piezo buzzer
-1. 2x LED Strips (WS2811 GRB is the default, but anything supported by FastLED should work)
-1. SSD1306 128x64 Display
+1. 5v piezo active buzzer
+1. 2x LED Strips (WS2812 GRB is the default, but anything supported by FastLED should work)
+1. SSD1306 128x64 Display (4 pin, any color, the blue/yellow works nice too)
 
 # Wiring
 ## Can Module: 
