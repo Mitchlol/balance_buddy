@@ -40,5 +40,5 @@ Features are designed to be configured VIA the constants
 All the required libraries are included, just hit the upload button in Arduino IDE
 
 # Why does my balance buddy keep crashing?!!!
-If youre using a display, it is likely related to [bus capacitence](https://hackaday.com/2017/02/08/taking-the-leap-off-board-an-introduction-to-i2c-over-long-wires/) and [wire.h hangs](https://github.com/OpenAgricultureFoundation/openag_brain/issues/236)
+If youre using a display, it is likely related to [bus capacitence](https://hackaday.com/2017/02/08/taking-the-leap-off-board-an-introduction-to-i2c-over-long-wires/) and [wire.h hangs](https://github.com/OpenAgricultureFoundation/openag_brain/issues/236)  
 In my case using minimal length wires, and a 2.2k pull up from scl to 3.3v solved my issues.
