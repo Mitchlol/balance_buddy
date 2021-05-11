@@ -47,35 +47,27 @@ class Beeper {
       
       beepStartTime = millis();
       isBeeping = true;
-      beepsLength = 7;
+      beepsLength = 5;
       // On 1
       beeps[0].startOffset = 0;
-      beeps[0].frequency = 440;
+      beeps[0].frequency = 2000;
       beeps[0].triggered = false;
-      // Off
-      beeps[1].startOffset = 250;
-      beeps[1].frequency = 0;
-      beeps[1].triggered = false;
       // On 2
-      beeps[2].startOffset = 350;
-      beeps[2].frequency = 880;
-      beeps[2].triggered = false;
-      // Off
-      beeps[3].startOffset = 600;
-      beeps[3].frequency = 0;
-      beeps[3].triggered = false;
+      beeps[1].startOffset = 100;
+      beeps[1].frequency = 2300;
+      beeps[1].triggered = false;
       // On 3
-      beeps[4].startOffset = 700;
-      beeps[4].frequency = 1760;
-      beeps[4].triggered = false;
+      beeps[2].startOffset = 200;
+      beeps[2].frequency = 2600;
+      beeps[2].triggered = false;
+      // On 4
+      beeps[3].startOffset = 300;
+      beeps[3].frequency = 2900;
+      beeps[3].triggered = false;
       // off
-      beeps[5].startOffset = 950;
-      beeps[5].frequency = 0;
-      beeps[5].triggered = false;
-      // off off
-      beeps[6].startOffset = 1050;
-      beeps[6].frequency = 0;
-      beeps[6].triggered = false;
+      beeps[4].startOffset = 600;
+      beeps[4].frequency = 0;
+      beeps[4].triggered = false;
     }
 
     void queueShortSingle(){
@@ -88,7 +80,7 @@ class Beeper {
       beepsLength = 3;
       // On 1
       beeps[0].startOffset = 0;
-      beeps[0].frequency = 440;
+      beeps[0].frequency = 2600;
       beeps[0].triggered = false;
       // Off
       beeps[1].startOffset = 300;
@@ -110,7 +102,7 @@ class Beeper {
       beepsLength = 3;
       // On 1
       beeps[0].startOffset = 0;
-      beeps[0].frequency = 440;
+      beeps[0].frequency = 2600;
       beeps[0].triggered = false;
       // Off
       beeps[1].startOffset = 750;
@@ -129,34 +121,26 @@ class Beeper {
       
       beepStartTime = millis();
       isBeeping = true;
-      beepsLength = 7;
+      beepsLength = 5;
       // Sad
       beeps[0].startOffset = 0;
-      beeps[0].frequency = 3000;
+      beeps[0].frequency = 2900;
       beeps[0].triggered = false;
       // Sad
       beeps[1].startOffset = 100;
-      beeps[1].frequency = 2500;
+      beeps[1].frequency = 2600;
       beeps[1].triggered = false;
       // Sad
       beeps[2].startOffset = 200;
-      beeps[2].frequency = 2000;
+      beeps[2].frequency = 2300;
       beeps[2].triggered = false;
       // Sad
       beeps[3].startOffset = 300;
-      beeps[3].frequency = 1500;
+      beeps[3].frequency = 2000;
       beeps[3].triggered = false;
-      // Sad
-      beeps[4].startOffset = 400;
-      beeps[4].frequency = 1000;
-      beeps[4].triggered = false;
-      // Sad
-      beeps[5].startOffset = 500;
-      beeps[5].frequency = 500;
-      beeps[5].triggered = false;
       // off 
-      beeps[6].startOffset = 600;
-      beeps[6].frequency = 0;
-      beeps[6].triggered = false;
+      beeps[4].startOffset = 600;
+      beeps[4].frequency = 0;
+      beeps[4].triggered = false;
     }
 };
