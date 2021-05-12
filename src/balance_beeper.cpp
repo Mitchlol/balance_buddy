@@ -26,8 +26,6 @@ class BalanceBeeper {
     }
 
     void loop(double dutyCycle, double erpm, uint16_t switchState, double voltage){
-      beeper.loop();
-
       // Non latching beeps for Duty Cycle
       if(fabsf(dutyCycle) > DUTY_CYCLE_ALERT && DUTY_CYCLE_ALERT > 0){
         beeper.queueShortSingle();
@@ -46,6 +44,8 @@ class BalanceBeeper {
         beeper.queueSad();
         lastLowVoltageMillis = millis();
       }
+
+      beeper.loop();
     }
 
 };
