@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include "SSD1306Ascii.h"
 #include "SSD1306AsciiWire.h"
-#include "esc.cpp"
 
 #define REFRESH_INTERVAL 1000 // every 1s
 

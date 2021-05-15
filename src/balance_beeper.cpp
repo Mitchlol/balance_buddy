@@ -1,6 +1,6 @@
 #include "beeper.cpp"
 
-#define BEEPER_PIN 4
+#define BEEPER_PIN 18
 
 #define PLAY_STARTUP true
 #define DUTY_CYCLE_ALERT 0.85 // 0 to disable

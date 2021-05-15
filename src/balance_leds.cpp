@@ -6,8 +6,8 @@
 #define BRIGHTNESS 64
 
 // Note: Forward in this instance means postive ERPM, which can actually be backwards if your motor direction is reversed.
-#define LED_PIN_FOREWARD 5
-#define LED_PIN_BACKWARD 6
+#define LED_PIN_FOREWARD 19
+#define LED_PIN_BACKWARD 21
 #define NUM_LEDS_FORWARD 9
 #define NUM_LEDS_BACKWARD 9
 #define STARTUP_FORWARD true
