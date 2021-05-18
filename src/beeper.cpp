@@ -16,17 +16,6 @@ private:
   int beepsLength = 0;
   struct Beep beeps[20];
 
-  void tone(int pin, int freq)
-  {
-    ledcSetup(0, 2000, 8);  // setup beeper
-    ledcAttachPin(pin, 0);  // attach beeper
-    ledcWriteTone(0, freq); // play tone
-  }
-  void noTone(int pin)
-  {
-    tone(pin, 0);
-  }
-
 public:
   Beeper(int beeper_pin)
   {
@@ -35,6 +24,8 @@ public:
 
   void setup()
   {
+    ledcSetup(0, 2000, 8); // setup beeper
+    ledcAttachPin(pin, 0); // attach beeper
   }
 
   void loop()
@@ -47,14 +38,8 @@ public:
         if (timeInBeeping > beeps[i].startOffset && beeps[i].triggered == false)
         {
           beeps[i].triggered = true;
-          if (beeps[i].frequency > 0)
-          {
-            tone(pin, beeps[i].frequency);
-          }
-          else
-          {
-            noTone(pin);
-          }
+          ledcWriteTone(0, beeps[i].frequency); // play tone
+
           if (i == beepsLength - 1)
           {
             isBeeping = false;
@@ -64,7 +49,7 @@ public:
     }
   }
 
-  void queueThreeShort()
+  void queueHappy()
   {
     if (isBeeping)
     {
@@ -111,11 +96,11 @@ public:
     beeps[0].frequency = 2600;
     beeps[0].triggered = false;
     // Off
-    beeps[1].startOffset = 300;
+    beeps[1].startOffset = 250;
     beeps[1].frequency = 0;
     beeps[1].triggered = false;
     // off off
-    beeps[2].startOffset = 300;
+    beeps[2].startOffset = 500;
     beeps[2].frequency = 0;
     beeps[2].triggered = false;
   }
