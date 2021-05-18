@@ -135,7 +135,7 @@ public:
     }
     tempMosfet = (((int16_t)readBuffer[5] << 8) + ((int16_t)readBuffer[6])) / 10.0;
     tempMotor = (((int16_t)readBuffer[7] << 8) + ((int16_t)readBuffer[8])) / 10.0;
-    dutyCycle = (((int16_t)readBuffer[9] << 8) + ((int16_t)readBuffer[10])) / 1000.0;
+    dutyCycle = int16_t (((int16_t)readBuffer[9] << 8) + ((int16_t)readBuffer[10])) / 1000.0;
     erpm = (((int32_t)readBuffer[11] << 24) + ((int32_t)readBuffer[12] << 16) + ((int32_t)readBuffer[13] << 8) + ((int32_t)readBuffer[14]));
     voltage = (((int16_t)readBuffer[15] << 8) + ((int16_t)readBuffer[16])) / 10.0;
     fault = readBuffer[17];

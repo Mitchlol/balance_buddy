@@ -136,7 +136,7 @@ public:
         {
           oled.print("|");
         }
-        oled.print("                           ");
+        oled.print("                                           ");
         oled.println();
 
         line = 0;
