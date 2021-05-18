@@ -78,11 +78,11 @@ public:
   void loop(double erpm, uint16_t switchState)
   {
     // Latching behavior, if you know, you know.
-    if (erpm > 10)
+    if (erpm > 300)
     {
       directionIsForward = true;
     }
-    else if (erpm < -10)
+    else if (erpm < -300)
     {
       directionIsForward = false;
     }
